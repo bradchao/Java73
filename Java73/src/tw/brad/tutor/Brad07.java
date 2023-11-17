@@ -4,9 +4,17 @@ public class Brad07 {
 
 	public static void main(String[] args) {
 		// loop
-		for (int a = 0 ; a < 10 ; a++) {
-			System.out.println(a);
+		int a = 0;
+		for ( printBrad(); a < 10 ; printLine()) {
+			System.out.println(a++);
 		}
+	}
+	
+	static void printBrad() {
+		System.out.println("Brad");
+	}
+	static void printLine() {
+		System.out.println("----");
 	}
 
 }
