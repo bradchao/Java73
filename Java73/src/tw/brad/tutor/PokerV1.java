@@ -3,9 +3,10 @@ package tw.brad.tutor;
 public class PokerV1 {
 
 	public static void main(String[] args) {
-		int[] poker = new int[10];
+		long start = System.currentTimeMillis();
+		int[] poker = new int[52];
 		for (int i=0; i<poker.length; i++) {
-			int temp = (int)(Math.random()*10);
+			int temp = (int)(Math.random()*52);
 			
 			// 檢查機制
 			boolean isRepeat = false;
@@ -23,6 +24,8 @@ public class PokerV1 {
 				i--;
 			}
 		}
+		System.out.println("---");
+		System.out.println(System.currentTimeMillis() - start);
 	}
 
 }
