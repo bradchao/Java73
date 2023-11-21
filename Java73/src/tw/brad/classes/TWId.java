@@ -37,6 +37,14 @@ public class TWId {
 		this.id = id;
 	}
 	
+	public static TWId createTWId(String id) {
+		if (isReightID(id)) {
+			return new TWId(id);
+		}else {
+			return null;
+		}
+	}
+	
 	
 	public static boolean isReightID(String id) {
 		// 1. length = 10
