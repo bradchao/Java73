@@ -34,7 +34,10 @@ public class TWId {
 			int n8 = Integer.parseInt(id.substring(8, 9));
 			int n9 = Integer.parseInt(id.substring(9, 10));
 			
+			int sum = a1*1 + a2*9 + n1*8 + n2*7 + n3*6 + n4*5 +
+					n5*4 + n6*3 + n7*2 + n8*1 + n9*1;
 			
+			isRight = sum % 10 == 0;
 		}
 		
 		
