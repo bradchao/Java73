@@ -2,13 +2,48 @@ package tw.brad.classes;
 
 public class TWId {
 	private String id;
+	private static String letters = "ABCDEFGHJKLMNPQRSTUVXYWZIO";
+	
+	public TWId() {
+		this((int)(Math.random()*2) == 0);
+	}
+	public TWId(boolean isMale) {
+		this(isMale, (int)(Math.random()*26));
+	}
+	public TWId(int area) {
+		this((int)(Math.random()*2) == 0, area);
+	}
+	public TWId(boolean isMale, int area) {
+		String c1 = letters.substring(area, area+1);
+		StringBuilder sb = new StringBuilder(c1);
+		sb.append(isMale?"1":"2");
+		for (int i=0; i<7; i++) {
+			sb.append((int)(Math.random()*10));
+		}
+		
+		for (int i=0; i<10; i++) {
+			if (isReightID(sb.toString() + i)) {
+				id = sb.toString() + i;
+				break;
+			}
+		}
+		
+	}
+	
+	public String getId() {return id;}
+	
+	
+	private TWId(String id) {
+		this.id = id;
+	}
+	
 	
 	public static boolean isReightID(String id) {
 		// 1. length = 10
 		// 2. 1 => A-Z
 		// 3. 2 => 1 or 2
 		// 4. 3 - 10 => 0 ~ 9
-		String letters = "ABCDEFGHJKLMNPQRSTUVXYWZIO";
+		
 		boolean isRight = false;
 //		if (id.length() == 10) {
 //			if (letters.indexOf(id.charAt(0)) >= 0) {
