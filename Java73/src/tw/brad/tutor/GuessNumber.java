@@ -33,6 +33,12 @@ public class GuessNumber extends JFrame implements ActionListener{
 		input.setFont(new Font(null, Font.BOLD + Font.ITALIC, 24));
 		
 		guess.addActionListener(this);
+		guess.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		
 		top.add(guess, BorderLayout.EAST);
 		top.add(input, BorderLayout.CENTER);
