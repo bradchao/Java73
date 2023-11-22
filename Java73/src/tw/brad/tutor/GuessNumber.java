@@ -40,7 +40,7 @@ public class GuessNumber extends JFrame implements ActionListener{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		answer = createAnswer(3);
-		System.out.println(answer);
+		//System.out.println(answer);
 	}
 	
 	private String createAnswer(int d) {
@@ -70,7 +70,27 @@ public class GuessNumber extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		//System.out.println(createAnswer(4));
+		String inputText = input.getText();
+		String result = checkAB(inputText);	// ex. 1A2B
+		log.append(String.format("%s => %s\n", inputText, result));
+		input.setText("");
 		
 	}
+	
+	private String checkAB(String g) {
+		int a, b ; a = b = 0;
+		for (int i = 0; i< g.length(); i++) {
+			if (g.charAt(i) == answer.charAt(i)) {
+				a++;
+			}else if (answer.indexOf(g.charAt(i)) >= 0) {
+				b++;
+			}
+		}
+		return String.format("%dA%dB", a, b);
+	}
+	
+	
+	
+	
 
 }
