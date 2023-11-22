@@ -1,11 +1,13 @@
 package tw.brad.tutor;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -15,6 +17,7 @@ public class GuessNumber extends JFrame implements ActionListener{
 	private JTextField input;
 	private JTextArea log;
 	private String answer;
+	private int counter;
 	
 	public GuessNumber() {
 		// super();
@@ -26,6 +29,8 @@ public class GuessNumber extends JFrame implements ActionListener{
 		guess = new JButton("猜");
 		input = new JTextField();
 		log = new JTextArea();
+		
+		input.setFont(new Font(null, Font.BOLD + Font.ITALIC, 24));
 		
 		guess.addActionListener(this);
 		
@@ -39,8 +44,14 @@ public class GuessNumber extends JFrame implements ActionListener{
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
+		initGame();
+		System.out.println(answer);
+	}
+	
+	private void initGame() {
 		answer = createAnswer(3);
-		//System.out.println(answer);
+		counter = 0;
+		log.setText("");
 	}
 	
 	private String createAnswer(int d) {
@@ -69,11 +80,19 @@ public class GuessNumber extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//System.out.println(createAnswer(4));
+		counter++;
 		String inputText = input.getText();
 		String result = checkAB(inputText);	// ex. 1A2B
-		log.append(String.format("%s => %s\n", inputText, result));
+		log.append(String.format("%d: %s => %s\n", counter, inputText, result));
 		input.setText("");
+		
+		if (result.equals("3A0B")) {
+			JOptionPane.showMessageDialog(null, "恭喜老爺");
+			initGame();
+		}else if (counter == 3) {
+			JOptionPane.showMessageDialog(null, "Loser: " + answer);
+			initGame();
+		}
 		
 	}
 	
