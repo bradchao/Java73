@@ -11,15 +11,14 @@ import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
-public class MyPanel extends JPanel {
-	private LinkedList<LinkedList<HashMap<String, Integer>>> lines, recycle;
+public class MyPanelV2 extends JPanel {
+	private LinkedList<LinkedList<Point>> lines;
 	
 	
-	public MyPanel() {
+	public MyPanelV2() {
 		setBackground(Color.YELLOW);
 		
 		lines = new LinkedList<>();
-		recycle = new LinkedList<>();
 		
 		MyMouseListener listener = new MyMouseListener();
 		addMouseListener(listener);
@@ -35,12 +34,11 @@ public class MyPanel extends JPanel {
 		g2d.setColor(Color.BLUE);
 		g2d.setStroke(new BasicStroke(4));
 		
-		for (LinkedList<HashMap<String, Integer>> line: lines) {
+		for (LinkedList<Point> line: lines) {
 			for (int i=1; i<line.size(); i++) {
-				HashMap<String, Integer> p0 = line.get(i-1);
-				HashMap<String, Integer> p1 = line.get(i);
-				g2d.drawLine(p0.get("x"), p0.get("y"), 
-						p1.get("x"), p1.get("y"));
+				Point p0 = line.get(i-1);
+				Point p1 = line.get(i);
+				g2d.drawLine(p0.x, p0.y, p1.x, p1.y);
 			}
 		}
 	}
@@ -48,12 +46,10 @@ public class MyPanel extends JPanel {
 	private class MyMouseListener extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {
-			recycle.clear();
+			Point point = new Point();
+			point.x = e.getX(); point.y = e.getY();
 			
-			HashMap<String, Integer> point = new HashMap<>();
-			point.put("x", e.getX()); point.put("y", e.getY());
-			
-			LinkedList<HashMap<String, Integer>> line = new LinkedList<>();
+			LinkedList<Point> line = new LinkedList<>();
 			line.add(point);
 			
 			lines.add(line);
@@ -61,32 +57,28 @@ public class MyPanel extends JPanel {
 		}
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			HashMap<String, Integer> point = new HashMap<>();
-			point.put("x", e.getX()); point.put("y", e.getY());
+			Point point = new Point();
+			point.x = e.getX(); point.y = e.getY();
 			
 			lines.getLast().add(point);
 			repaint();
 		}
 	}
-	
-	public void clear() {
-		lines.clear();
-		repaint();
-	}
-	
-	public void undo() {
-		if (lines.size() > 0) {
-			recycle.add(lines.removeLast());
-			repaint();
-		}
-	}
-	
-	public void redo() {
-		if (recycle.size() > 0) {
-			lines.add(recycle.removeLast());
-			repaint();
-		}
-	}
-	
-	
 }
+
+
+class Point {
+	int x, y;
+}
+
+
+
+
+
+
+
+
+
+
+
+
