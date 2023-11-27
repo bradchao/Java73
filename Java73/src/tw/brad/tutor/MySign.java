@@ -15,14 +15,14 @@ import tw.brad.classes.MyPanel;
 import tw.brad.classes.MyPanelV2;
 
 public class MySign extends JFrame {
-	private MyPanel myPanel;
+	private MyPanelV2 myPanel;
 	private JButton clear, undo, redo, color;
 	
 	public MySign() {
 		super("簽名App");
 		
 		setLayout(new BorderLayout());
-		myPanel = new MyPanel();
+		myPanel = new MyPanelV2();
 		add(myPanel, BorderLayout.CENTER);
 		
 		JPanel top = new JPanel(new FlowLayout());
@@ -70,8 +70,10 @@ public class MySign extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Color color = JColorChooser.showDialog(null, "Change Color", Color.BLUE);
-				
+				Color color = JColorChooser.showDialog(null, "Change Color", myPanel.getColor());
+				if (color != null) {
+					myPanel.setColor(color);
+				}
 			}
 		});
 	}
