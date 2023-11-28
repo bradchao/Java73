@@ -1,6 +1,8 @@
 package tw.brad.classes;
 
-public class Student {
+import java.io.Serializable;
+
+public class Student implements Serializable {
 	private int ch, eng, math;
 	public Student(int ch, int eng, int math) {
 		this.ch = ch; this.eng = eng; this.math = math;
