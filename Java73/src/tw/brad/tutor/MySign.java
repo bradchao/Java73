@@ -18,7 +18,7 @@ import tw.brad.classes.MyPanelV2;
 
 public class MySign extends JFrame {
 	private MyPanel myPanel;
-	private JButton clear, undo, redo, color, saveObj, loadObj;
+	private JButton clear, undo, redo, color, saveObj, loadObj, save;
 	
 	public MySign() {
 		super("簽名App");
@@ -41,6 +41,9 @@ public class MySign extends JFrame {
 		top.add(saveObj);
 		loadObj = new JButton("loadObj");
 		top.add(loadObj);
+		
+		save = new JButton("save");
+		top.add(save);
 		
 		add(top, BorderLayout.NORTH);
 		
@@ -116,6 +119,15 @@ public class MySign extends JFrame {
 						System.out.println(e1);
 					}
 				}
+				
+			}
+		});
+		
+		save.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				myPanel.saveJPEG();
 				
 			}
 		});

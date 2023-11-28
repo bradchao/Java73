@@ -6,14 +6,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel {
@@ -114,6 +117,23 @@ public class MyPanel extends JPanel {
 			throw new Exception("ERR04");
 		}
 		oin.close();
+	}
+	
+	public void saveJPEG() {
+		BufferedImage img = new BufferedImage(
+				getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+		
+		Graphics g = img.getGraphics();
+		paint(g);
+		
+		try {
+			ImageIO.write(img, "jpg", new File("dir1/brad.jpg"));
+			System.out.println("Save JPG success");
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+		
+		
 	}
 	
 }
