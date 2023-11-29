@@ -13,12 +13,14 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import tw.brad.classes.BradClock;
 import tw.brad.classes.MyPanel;
 import tw.brad.classes.MyPanelV2;
 
 public class MySign extends JFrame {
 	private MyPanel myPanel;
 	private JButton clear, undo, redo, color, saveObj, loadObj, save;
+	private BradClock clock;
 	
 	public MySign() {
 		super("簽名App");
@@ -44,6 +46,9 @@ public class MySign extends JFrame {
 		
 		save = new JButton("save");
 		top.add(save);
+		
+		clock = new BradClock();
+		top.add(clock);
 		
 		add(top, BorderLayout.NORTH);
 		
@@ -127,7 +132,12 @@ public class MySign extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				myPanel.saveJPEG();
+				new Thread() {
+					@Override
+					public void run() {
+						myPanel.saveJPEG();
+					}
+				}.start();
 				
 			}
 		});
