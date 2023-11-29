@@ -13,18 +13,21 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel{
-	private BufferedImage ball0;
-	private int ballX, ballY, viewW, viewH, dx, dy, ballW, ballH;
+	private BallImg[] ballImg;
+	private int viewW, viewH;
 	private Timer timer;
 	
 	public GamePanel() {
 		setBackground(Color.YELLOW);
 		
 		try {
-			ball0 = ImageIO.read(new File("dir1/ball0.png"));
-			ballW = ball0.getWidth(); ballH = ball0.getHeight();
-			ballX = ballY = 10;
-			dx = dy = 2;
+			ballImg = new BallImg[3];
+			ballImg[0] = new BallImg(ImageIO.read(new File("dir1/ball0.png")));
+			ballImg[1] = new BallImg(ImageIO.read(new File("dir1/ball1.png")));
+			ballImg[2] = new BallImg(ImageIO.read(new File("dir1/ball2.png")));
+			
+			//ballX = ballY = 10;
+			//dx = dy = 2;
 		} catch (IOException e) {
 			System.out.println(e);
 			System.exit(0);
@@ -33,7 +36,7 @@ public class GamePanel extends JPanel{
 		
 		
 		timer = new Timer();
-		timer.schedule(new BallTask(), 1*1000, 10);
+		//timer.schedule(new BallTask(), 1*1000, 10);
 		timer.schedule(new RefreshTask(), 0, 16);
 	}
 	
@@ -45,16 +48,23 @@ public class GamePanel extends JPanel{
 	}
 	
 	private class BallTask extends TimerTask {
+		int x, y, dx, dy, ballIndex;
+		//BallImg img;
+		BallTask(int x, int y, int dx, int dy, int ballIndex){
+			this.x = x; this.y = y; this.dx = dx; this.dy = dy;
+			this.ballIndex = ballIndex;
+		}
+		
 		@Override
 		public void run() {
-			if (ballX <= 0 || ballX + ballW >= viewW) {
+			if (x <= 0 || x + ballImg[ballIndex].w >= viewW) {
 				dx *= -1;
 			}
-			if (ballY <= 0 || ballY + ballH >= viewH) {
+			if (y <= 0 || y + ballImg[ballIndex].h >= viewH) {
 				dy *= -1;
 			}			
-			ballX += dx;
-			ballY += dy;
+			x += dx;
+			y += dy;
 			//repaint();
 			
 		}
@@ -70,6 +80,23 @@ public class GamePanel extends JPanel{
 		Graphics2D g2d = (Graphics2D)g;
 		
 	
-		g2d.drawImage(ball0, ballX, ballY, null);
+		//g2d.drawImage(ball0, ballX, ballY, null);
 	}
 }
+class BallImg {
+	BufferedImage img;
+	int w, h;
+	BallImg(BufferedImage img){
+		this.img = img;
+		w = img.getWidth(); h = img.getHeight();
+	}
+	
+}
+
+
+
+
+
+
+
+
