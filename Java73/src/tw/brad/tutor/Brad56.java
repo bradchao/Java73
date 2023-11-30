@@ -11,15 +11,15 @@ public class Brad56 {
 
 	public static void main(String[] args) {
 		String mesg = "quit";
-		try {
-			Socket client = new Socket(
+		try (	Socket client = new Socket(
 				InetAddress.getByName("10.0.104.130"), 80);
-			
-			OutputStream out = client.getOutputStream();
-			BufferedOutputStream bout = new BufferedOutputStream(out);
+				OutputStream out = client.getOutputStream();
+				BufferedOutputStream bout = new BufferedOutputStream(out);	
+				){
+
 			bout.write(mesg.getBytes());
 			bout.flush();
-			bout.close();
+			//bout.close();
 			
 			System.out.println("Send OK");
 		} catch (Exception e) {
