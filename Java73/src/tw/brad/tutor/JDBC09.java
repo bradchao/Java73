@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.util.Properties;
 import java.util.Scanner;
 
+import org.json.JSONStringer;
+import org.json.JSONWriter;
+
 import tw.brad.classes.BCrypt;
 import tw.brad.classes.Member;
 
@@ -37,7 +40,16 @@ public class JDBC09 {
 			Member member;
 			if ((member = login(account, passwd)) != null) {
 				System.out.println("Welcome, " + member.getCname());
-			
+				
+				// 產生 Member JSON
+				JSONStringer js = new JSONStringer();
+				JSONWriter jw = js.object();
+				js.key("id").value(member.getId());
+				js.key("account").value(member.getAccount());
+				js.endObject();
+				System.out.println(jw.toString());
+				
+				
 				System.out.print("New Password: ");
 				String newpasswd = scanner.next();
 				if (chPasswd(member, newpasswd)) {

@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
 
+import org.json.JSONStringer;
+import org.json.JSONWriter;
+
 public class JDBC10 {
 	private static final String USER = "root";
 	private static final String PASSWD = "root";
@@ -24,6 +27,9 @@ public class JDBC10 {
 		prop.put("user", USER);
 		prop.put("password", PASSWD);
 		
+		JSONStringer js = new JSONStringer();
+		JSONWriter jw = js.array();
+		
 		try {
 			Connection conn = DriverManager.getConnection(URL, prop);
 			Statement stmt = conn.createStatement();
@@ -33,7 +39,15 @@ public class JDBC10 {
 				String first = rs.getString("FirstName");
 				String sum = rs.getString("sum");
 				System.out.printf("%s %s: %s\n", last, first, sum);
+				
+				jw.object();
+					jw.key("LastName").value(last);
+					jw.key("FirstName").value(first);
+					jw.key("sum").value(sum);
+				jw.endObject();
 			}
+			jw.endArray();
+			System.out.println(jw.toString());
 		}catch(Exception e) {
 			
 		}
