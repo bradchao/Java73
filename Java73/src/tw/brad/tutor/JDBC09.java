@@ -16,7 +16,9 @@ public class JDBC09 {
 	private static final String PASSWD = "root";
 	private static final String URL = "jdbc:mysql://127.0.0.1/brad";
 	private static final String SQL_LOGIN = 
-			"SELECT * FROM member WHERE account = ?";	
+			"SELECT * FROM member WHERE account = ?";
+	private static final String SQL_CHPASSWD = 
+			"UPDATE member SET passwd = ? WHERE id = ?";	
 	
 	public static void main(String[] args) {
 		// User Input
@@ -35,6 +37,14 @@ public class JDBC09 {
 			Member member;
 			if ((member = login(account, passwd)) != null) {
 				System.out.println("Welcome, " + member.getCname());
+			
+				System.out.print("New Password: ");
+				String newpasswd = scanner.next();
+				if (chPasswd(member, newpasswd)) {
+					System.out.println("New Password changed");
+				}else {
+					System.out.println("Password change ERROR");
+				}
 			}else {
 				System.out.println("Login Failure");
 			}
@@ -73,6 +83,19 @@ public class JDBC09 {
 		return null;
 	}
 	
-	
+	static boolean chPasswd(Member member, String newpasswd) {
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL_CHPASSWD);
+			pstmt.setString(1, BCrypt.hashpw(newpasswd, BCrypt.gensalt()));
+			pstmt.setInt(2, member.getId());
+			int num = pstmt.executeUpdate();
+			if (num == 1) {
+				return true;
+			}
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		return false;
+	}
 
 }
