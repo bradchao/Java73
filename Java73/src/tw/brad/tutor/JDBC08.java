@@ -3,6 +3,7 @@ package tw.brad.tutor;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -16,7 +17,7 @@ public class JDBC08 {
 	private static final String SQL_INSERT = 
 		"INSERT INTO member (account,passwd,cname) VALUES (?,?,?)";
 	private static final String SQL_CHECK = 
-			"SELECT * FROM member WHERE account = ?";	
+			"SELECT count(*) count FROM member WHERE account = ?";	
 	
 	public static void main(String[] args) {
 		// User Input
@@ -55,8 +56,22 @@ public class JDBC08 {
 	
 	
 	static boolean chechAccount(String account) {
-		
-		return true;
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL_CHECK);
+			pstmt.setString(1, account);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			int num = rs.getInt("count");
+			if (num == 0) {
+				return true;
+			}else {
+				return false;
+			}
+
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		return false;
 	}
 	
 	static boolean addMember(String account, String passwd, String cname) {
