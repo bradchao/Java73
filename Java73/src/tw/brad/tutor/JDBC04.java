@@ -9,6 +9,7 @@ import java.net.URLConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.Properties;
 
 import org.json.JSONArray;
@@ -39,7 +40,13 @@ public class JDBC04 {
 		prop.put("password", "root");
 		try (Connection conn = DriverManager.getConnection(
 				"jdbc:mysql://127.0.0.1:3306/brad",prop);){
-
+			Statement stmt = conn.createStatement();
+			// 砍全部
+			stmt.executeUpdate("DELETE FROM food");
+			// 歸零
+			stmt.executeUpdate("ALTER TABLE food AUTO_INCREMENT = 1");
+			
+			
 			String sql = "INSERT INTO food (name,addr,tel,pic,lat,lng) VALUES (?,?,?,?,?,?)";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			
