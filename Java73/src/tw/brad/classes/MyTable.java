@@ -18,6 +18,19 @@ public class MyTable extends JTable {
 		
 		myModel = new MyModel();
 		setModel(myModel);
+		myModel.setColumnIdentifiers(foodDb.getHeader());
+		
+	}
+	
+	public void delData() {
+		int n = getSelectedRow();
+		if (n >= 0) {
+			try {
+				foodDb.delRow();
+			} catch (Exception e) {
+
+			}
+		}
 	}
 	
 	private class MyModel extends DefaultTableModel {
@@ -37,6 +50,7 @@ public class MyTable extends JTable {
 			return foodDb.getData(row+1, column+1);
 		}
 
+		
 		
 	}
 }

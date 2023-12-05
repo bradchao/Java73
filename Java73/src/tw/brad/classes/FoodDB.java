@@ -12,8 +12,8 @@ import java.util.Properties;
 public class FoodDB {
 	private static final String USER = "root";	
 	private static final String PASSWD = "root";
-	private static final String URL = "jdbc:mysql://127.0.0.1/northwind";
-	private static final String SQL_QUERY = "SELECT * FROM orderdetails";
+	private static final String URL = "jdbc:mysql://127.0.0.1/brad";
+	private static final String SQL_QUERY = "SELECT * FROM food";
 	
 	private Connection conn;
 	private ResultSet rs;
@@ -64,5 +64,11 @@ public class FoodDB {
 		}catch(Exception e) {
 			return "ERROR";
 		}
+	}
+	
+	public String[] getHeader() {return fieldNames;}
+	
+	public void delRow() throws Exception{
+		rs.deleteRow();
 	}
 }
