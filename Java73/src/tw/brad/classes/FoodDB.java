@@ -41,7 +41,7 @@ public class FoodDB {
 		fieldNames = new String[rsmd.getColumnCount()];
 		for (int i=0; i<fieldNames.length; i++) {
 			fieldNames[i] = rsmd.getColumnName(i+1);
-			System.out.println(fieldNames[i]);
+			//System.out.println(fieldNames[i]);
 		}
 	}
 	public int getRows() {
@@ -69,6 +69,30 @@ public class FoodDB {
 	public String[] getHeader() {return fieldNames;}
 	
 	public void delRow() throws Exception{
-		rs.deleteRow();
+		System.out.println(rs.getRow());
+		//rs.deleteRow();
 	}
+	
+	public void updateDB(int row, int col, String value) {
+		try {
+			rs.absolute(row);
+			rs.updateString(col, value);
+			rs.updateRow();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void moveNewRow() {
+		try {
+			rs.moveToInsertRow();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public ResultSet getRS() {return rs;}
 }
